@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Shooter Game</title>
+    <!-- Updated Unity Ads SDK URL -->
+    <script async src="https://static.unityads.unity3d.com/ads/3.0.0/unity-ads.js"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            font-family: Arial, sans-serif;
+            transition: background 0.5s ease;
+        }
+        
+        #gameContainer {
+            position: relative;
+        }
+        
+        canvas {
+            border: 2px solid #4a4e69;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        #score, #arrows {
+            position: absolute;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #score {
+            top: 20px;
+            left: 20px;
+        }
+
+        #arrows {
+            top: 20px;
+            right: 20px;
+        }
+        
+        .menu {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            min-width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        button {
+            background: #4CAF50;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            width: 120px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+
+        .level-btn {
+            background: #2196F3;
+        }
+
+        .level-btn:hover {
+            background: #1976D2;
+        }
+
+        .level-btn.locked {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        h1 {
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        #levelContainer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #winner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-size: 48px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        #adContainer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        <div id="score">Score: 0</div>
+        <div id="arrows">Arrows: 0</div>
+        
+        <div id="mainMenu" class="menu">
+            <h1>Bubble Shooter</h1>
+            <div id="levelContainer">
+                <!-- Level buttons will be added here dynamically -->
+            </div>
+        </div>
+
+        <div id="gameOver" class="menu">
+            <h2>Game Over!</h2>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <button onclick="showMainMenu()">Main Menu</button>
+            <button onclick="restartLevel()">Try Again</button>
+        </div>
+
+        <div id="levelComplete" class="menu">
+            <h2>Level Complete!</h2>
+            <p>Score: <span id="levelScore">0</span></p>
+            <button onclick="showMainMenu()">Main Menu</button>
+            <button onclick="nextLevel()">Next Level</button>
+        </div>
+
+        <div id="winner">
+            <h1>🎉 CONGRATULATIONS! 🎉</h1>
+            <h2>You Are The Winner!</h2>
+            <button onclick="showMainMenu()">Back to Menu</button>
+        </div>
+    </div>
+    <div id="adContainer">
+        <!-- Banner ad will be placed here -->
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
